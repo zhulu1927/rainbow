@@ -1,0 +1,21 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# @Time    : 2018/6/14 下午2:46
+# @Author  : Rainbow Zhu
+# @Site    : iflytek.com
+# @File    : 1.py
+# @Software: PyCharm
+
+import shutil,datetime,os
+
+yesterday = (datetime.datetime.now()-datetime.timedelta(days=1))
+
+log_path = '/var/log/nginx/'
+
+log_file = os.listdir(log_path)
+
+for file in log_file:
+    if os.path.splitext(file)[1] == ".log" :
+        shutil.move(log_path+file,log_path+file+'_'+yesterday.strftime('%Y%m%d'))
+
+os.popen('/usr/sbin/nginx -s reload')
